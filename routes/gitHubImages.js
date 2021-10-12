@@ -42,7 +42,8 @@ router.post('/updateImage',upload.single('file'),async function(req, res, next) 
                     'user-agent': 'node.js',
                     'Content-Type': 'text/plain',
                     'Accept': 'application/vnd.github.v3+json',
-                    'Authorization': 'token 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'
+                    // githubApi token
+                    'Authorization': 'token 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'
                 },
                 json: true,
                 body: {
@@ -68,6 +69,7 @@ router.post('/updateImage',upload.single('file'),async function(req, res, next) 
                 }else {
                     res.send({
                         message: '上传失败',
+                        content: option,
                         status: response.statusCode,
                     })
                 }
