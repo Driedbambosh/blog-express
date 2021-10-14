@@ -15,9 +15,25 @@ router.get('/', async function (req, result, next) {
   result.send(data)
 });
 
-// login登录
+/**
+ * @api {post} /my-blog/users/login 用户登录
+ * @apiDescription 用户登录
+ * @apiName login
+ * @apiGroup User
+ * @apiParam {string} userName 用户名
+ * @apiParam {string} passWord 密码
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiSuccess  token 返回token
+ * @apiSuccessExample {json} Success-Response:
+ * @CrossOrigin
+ *  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImExMTQ1NzYxNzkyIiwiaWF0IjoxNjM0MTgyMDM5LCJleHAiOjE2MzQyNjg0Mzl9.pYQ_NmCeq9LCoidhJZuNio_cbratPtpRewP1220apDQ"}
+ * @apiSampleRequest http://localhost:3001/v1/login
+ * @apiVersion 1.0.0
+ */
 router.post('/login', async function (req, result, next) {
   const {userName, passWord} = req.body
+  console.log(req.body);
   const data = await login({userName})
   if(userName == '' || passWord == '' || userName == undefined || passWord == undefined) {
     result.send({

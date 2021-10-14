@@ -38,18 +38,18 @@ router.post('/updateImage',upload.single('file'),async function(req, res, next) 
             var option = {
                 url: 'https://api.github.com/repos/Driedbambosh/githubImg/contents/img/'+ file.filename, // 请求的接口
                 method: 'PUT',	// 请求方式
-                headers: {  
+                headers: {
                     'user-agent': 'node.js',
                     'Content-Type': 'text/plain',
                     'Accept': 'application/vnd.github.v3+json',
                     // githubApi token
-                    'Authorization': 'token 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'
+                    'Authorization': 'token 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'
                 },
                 json: true,
                 body: {
                     'message': 'ImgUpload',
                     'committer':{
-                        'name': "名字",
+                        'name': "Driedbambosh",
                         'email': "1145761792@qq.com"
                     },
                     'content': buffer.toString('base64')
@@ -68,6 +68,7 @@ router.post('/updateImage',upload.single('file'),async function(req, res, next) 
                     })
                 }else {
                     res.send({
+                        
                         message: '上传失败',
                         content: option,
                         status: response.statusCode,

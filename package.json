@@ -19,5 +19,13 @@
     "morgan": "~1.9.1",
     "multer": "^1.4.3",
     "request": "^2.88.2"
+  },
+  "apidoc": {
+    "name": "blog-apiServer",
+    "version": "1.0.0",
+    "description": "blog项目API文档",
+    "title": "blog-server API",
+    "url": "http://localhost:8088",
+    "forceLanguage": "zh-cn"
   }
 }

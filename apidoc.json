@@ -1,0 +1,8 @@
+{
+  "name": "cloud-server",
+  "version": "1.0.0",
+  "description": "cloud-server项目API文档",
+  "title": "cloud-server API",
+  "url": "http://localhost:8088/",
+  "forceLanguage": "zh-cn"
+}

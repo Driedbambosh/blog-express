@@ -15,6 +15,7 @@ module.exports.register = async function (user) {
     data = await usersModel.find({userName: user.userName})
     if(data.length == 0){
         user.isLogin = false
+        user.avatar = 'http://localhost:8088/images/avatar.jpg'
         data = await usersModel.create(user)
         return data = {
             message: '注册成功!',

@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var articleRouter = require('./routes/article');
 var githubRouter = require('./routes/gitHubImages');
 const jwtAuth = require('./utils/jwt')
 require('./dao/database');
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('uploads'))
 app.use(jwtAuth)
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
@@ -34,6 +36,7 @@ app.use(function (err, req, res, next) {
 app.use('/my-blog', indexRouter);
 app.use('/my-blog/users', usersRouter);
 app.use('/my-blog/github', githubRouter);
+app.use('/my-blog/article', articleRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
