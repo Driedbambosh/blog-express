@@ -24,6 +24,17 @@ router.post('/',function(req, res, next) {
     })
 })
 
+// 上传图片
+/**
+ * @api {post} /my-blog/users/getUserInfo 上传图片
+ * @apiDescription 上传图片
+ * @apiName updateImage
+ * @apiGroup gitHubImages
+ * @apiParam {string} file 图片
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/gitHubImages/updateImage
+ * @apiVersion 1.0.0
+ */
 router.post('/updateImage',upload.single('file'),async function(req, res, next) {
     let file = req.file;
     fs.readFile(file.path,'binary',function(err,data){

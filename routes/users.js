@@ -24,11 +24,7 @@ router.get('/', async function (req, result, next) {
  * @apiParam {string} passWord 密码
  * @apiSuccess  message 返回message
  * @apiSuccess  status 返回状态
- * @apiSuccess  token 返回token
- * @apiSuccessExample {json} Success-Response:
- * @CrossOrigin
- *  {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImExMTQ1NzYxNzkyIiwiaWF0IjoxNjM0MTgyMDM5LCJleHAiOjE2MzQyNjg0Mzl9.pYQ_NmCeq9LCoidhJZuNio_cbratPtpRewP1220apDQ"}
- * @apiSampleRequest http://localhost:3001/v1/login
+ * @apiSampleRequest http://localhost:8088/my-blog/users/login
  * @apiVersion 1.0.0
  */
 router.post('/login', async function (req, result, next) {
@@ -72,6 +68,18 @@ router.post('/login', async function (req, result, next) {
 });
 
 // register注册
+/**
+ * @api {post} /my-blog/users/register 用户注册
+ * @apiDescription 用户注册
+ * @apiName register
+ * @apiGroup User
+ * @apiParam {string} userName 用户名
+ * @apiParam {string} passWord 密码
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiSampleRequest http://localhost:8088/my-blog/users/register
+ * @apiVersion 1.0.0
+ */
 router.post('/register', async function (req, result, next) {
   const {userName, passWord} = req.body
   const newPassWord = bcrypt.hashSync(passWord, 10)
@@ -81,6 +89,17 @@ router.post('/register', async function (req, result, next) {
 });
 
 // logout退出登录
+/**
+ * @api {post} /my-blog/users/logout 退出登录
+ * @apiDescription 退出登录
+ * @apiName logout
+ * @apiGroup User
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/users/logout
+ * @apiVersion 1.0.0
+ */
 router.post('/logout', async function (req, result, next) {
   const token = req.headers.authorization.split(' ')[1]
   jwt.verify(token, tokenStret,(err, data) => {
@@ -107,6 +126,20 @@ router.post('/logout', async function (req, result, next) {
 });
 
 // userEdit用户编辑
+/**
+ * @api {post} /my-blog/users/logout 用户编辑
+ * @apiDescription 用户编辑
+ * @apiName userEdit
+ * @apiGroup User
+ * @apiParam {string} userName 用户名
+ * @apiParam {string} passWord 密码
+ * @apiParam {string} avatar 头像
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/users/userEdit
+ * @apiVersion 1.0.0
+ */
 router.post('/userEdit', async function (req, result, next) {
   let editData = req.body
   editData.passWord = bcrypt.hashSync(editData.passWord, 10)
@@ -116,6 +149,20 @@ router.post('/userEdit', async function (req, result, next) {
 });
 
 // 获取用户信息
+/**
+ * @api {get} /my-blog/users/getUserInfo 获取用户信息
+ * @apiDescription 获取用户信息
+ * @apiName getUserInfo
+ * @apiGroup User
+ * @apiSuccess  avatar 头像
+ * @apiSuccess  isLogin 登录状态
+ * @apiSuccess  passWord 加密密码
+ * @apiSuccess  userName 用户名
+ * @apiSuccess  _id 用户id
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/users/logout
+ * @apiVersion 1.0.0
+ */
 router.get('/getUserInfo', async function (req, result, next) {
   const token = req.headers.authorization.split(' ')[1]
   jwt.verify(token, tokenStret,(err, data) => {
