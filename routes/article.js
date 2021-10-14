@@ -9,7 +9,7 @@ const tokenStret = 'aoligei'
 
 /* GET home page. */
 /**
- * @api {get} /my-blog/users/logout 获取文章
+ * @api {get} /my-blog/article/ 获取文章
  * @apiDescription 获取文章
  * @apiName getArticle
  * @apiGroup article
@@ -24,7 +24,7 @@ router.get('/', async function (req, res, next) {
 });
 
 /**
- * @api {post} /my-blog/users/logout 提交文章
+ * @api {post} /my-blog/article/sendArticle 提交文章
  * @apiDescription 提交文章
  * @apiName sendArticle
  * @apiGroup article

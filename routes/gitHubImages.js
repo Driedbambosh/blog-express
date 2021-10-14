@@ -26,7 +26,7 @@ router.post('/',function(req, res, next) {
 
 // 上传图片
 /**
- * @api {post} /my-blog/users/getUserInfo 上传图片
+ * @api {post} /my-blog/gitHubImages/updateImage 上传图片
  * @apiDescription 上传图片
  * @apiName updateImage
  * @apiGroup gitHubImages
