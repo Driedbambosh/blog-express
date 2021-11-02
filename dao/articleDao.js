@@ -15,3 +15,12 @@ module.exports.articleBrief = async function () {
     return await articleBriefModel.find()
 
 }
+
+
+module.exports.articleDetail = async function (articleId) {
+    console.log(articleId);
+    return await articleModel.find({
+        _id: articleId
+    })
+
+}

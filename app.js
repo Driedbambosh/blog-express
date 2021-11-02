@@ -20,6 +20,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/blog',express.static(path.join(__dirname, 'web')));
+app.use('/manage',express.static(path.join(__dirname, 'manage')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('uploads'))
 app.use(jwtAuth)
