@@ -54,7 +54,7 @@ router.post('/updateImage',upload.single('file'),async function(req, res, next) 
                     'Content-Type': 'text/plain',
                     'Accept': 'application/vnd.github.v3+json',
                     // githubApi token
-                    'Authorization': 'token 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'
+                    'Authorization': 'token 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'
                 },
                 json: true,
                 body: {

@@ -18,9 +18,8 @@ module.exports.articleBrief = async function () {
 
 
 module.exports.articleDetail = async function (articleId) {
-    console.log(articleId);
     return await articleModel.find({
         _id: articleId
-    })
+    }).populate('userId')
 
 }

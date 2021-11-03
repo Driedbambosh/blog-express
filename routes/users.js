@@ -83,7 +83,8 @@ router.post('/login', async function (req, result, next) {
 router.post('/register', async function (req, result, next) {
   const {userName, passWord} = req.body
   const newPassWord = bcrypt.hashSync(passWord, 10)
-  const data = await register({userName, passWord: newPassWord})
+  // 默认昵称
+  const data = await register({userName, passWord: newPassWord,nickName: 'admin'})
 
   result.send(data)
 });
@@ -127,13 +128,13 @@ router.post('/logout', async function (req, result, next) {
 
 // userEdit用户编辑
 /**
- * @api {post} /my-blog/users/logout 用户编辑
+ * @api {post} /my-blog/users/userEdit 用户编辑
  * @apiDescription 用户编辑
  * @apiName userEdit
  * @apiGroup User
- * @apiParam {string} userName 用户名
- * @apiParam {string} passWord 密码
+ * @apiParam {string} nickName 昵称
  * @apiParam {string} avatar 头像
+ * @apiParam {string} introduction 简介
  * @apiSuccess  message 返回message
  * @apiSuccess  status 返回状态
  * @apiHeader {String} Authorization 用户授权token
@@ -142,7 +143,8 @@ router.post('/logout', async function (req, result, next) {
  */
 router.post('/userEdit', async function (req, result, next) {
   let editData = req.body
-  editData.passWord = bcrypt.hashSync(editData.passWord, 10)
+  // 加密密码
+  // editData.passWord = bcrypt.hashSync(editData.passWord, 10)
   const data = await userEdit(editData)
 
   result.send(data)

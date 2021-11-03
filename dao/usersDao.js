@@ -32,5 +32,10 @@ module.exports.register = async function (user) {
 module.exports.userEdit = async function (editData) {
     let data = []
     data = await usersModel.updateOne({userName: editData.userName},editData)
+    if (data.acknowledged) {
+        data.status = 200
+    }else {
+        data.status = 500
+    }
     return data
 }

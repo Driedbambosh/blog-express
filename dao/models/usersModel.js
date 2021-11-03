@@ -3,10 +3,13 @@ const { Schema, model } = require('mongoose')
 
 const usersSchema = new Schema({
     userName: { type: String,unique: true},
+    updated: { type: Date, default: Date.now },
     passWord: String,
     avatar: String,
     autograph: String,
     isLogin: Boolean,
+    nickName: String,
+    introduction: String,
 })
 
 // const userEdit = new Schema({
