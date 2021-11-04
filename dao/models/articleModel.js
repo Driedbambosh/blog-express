@@ -4,6 +4,8 @@ const { Schema, model } = require('mongoose')
 const articleSchema = new Schema({
     title: String,
     article: Array,
+    picture: String,
+    introduction: String,
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'usersModel'
@@ -13,6 +15,8 @@ const articleSchema = new Schema({
 
 const articleBriefSchema = new Schema({
     title: String,
+    picture: String,
+    introduction: String,
     article:{
         type: String,
         select: false
