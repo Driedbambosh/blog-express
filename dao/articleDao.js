@@ -1,4 +1,4 @@
-const { articleModel,articleBriefModel } = require('./models/articleModel')
+const { articleModel,articleBriefModel,deleteArticleModel } = require('./models/articleModel')
 
 
 module.exports.article = async function (article) {
@@ -12,8 +12,12 @@ module.exports.article = async function (article) {
 }
 
 module.exports.articleBrief = async function () {
-    return await articleBriefModel.find()
+    return await articleBriefModel.find().populate('userId')
 
+}
+// 删除
+module.exports.deleteArticle = async function () {
+    return await deleteArticleModel.deleteOne()
 }
 
 

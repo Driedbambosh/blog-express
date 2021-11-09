@@ -32,6 +32,7 @@ const articleBriefSchema = new Schema({
 // })
 // 定义数据集合的模型，将schema和数据库中的集合关联起来
 const articleModel = model('articleModel', articleSchema, 'article')
+const deleteArticleModel = model('deleteArticleModel', articleSchema, 'article')
 const articleBriefModel = model('articleBriefModel', articleBriefSchema, 'article')
 // 查找 usersModel.find({......数据})不写查找全部
 // 新增 userModel.create({.....新增的数据})
@@ -42,3 +43,4 @@ const articleBriefModel = model('articleBriefModel', articleBriefSchema, 'articl
 
 module.exports.articleModel = articleModel
 module.exports.articleBriefModel = articleBriefModel
+module.exports.deleteArticleModel = deleteArticleModel

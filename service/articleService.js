@@ -1,6 +1,10 @@
-const { article,articleBrief,articleDetail } = require('../dao/articleDao')
+const { article,articleBrief,articleDetail,deleteArticle } = require('../dao/articleDao')
 module.exports.sendArticle = async function (user) {
     const data = await article(user)
+    return data
+}
+module.exports.deleteArticle = async function (user) {
+    const data = await deleteArticle(user)
     return data
 }
 
