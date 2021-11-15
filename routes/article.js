@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken')
-const { sendArticle,getArticle,getArticleDetail,deleteArticle } = require('../service/articleService');
+const { sendArticle,getArticle,getArticleDetail,deleteArticle,editArticle } = require('../service/articleService');
 const { login } = require('../service/usersService');
 
 
@@ -9,7 +9,7 @@ const tokenStret = 'aoligei'
 
 /* GET home page. */
 /**
- * @api {get} /my-blog/article/ 获取文章
+ * @api {get} /my-blog/article/ 获取文章列表
  * @apiDescription 获取文章
  * @apiName getArticle
  * @apiGroup article
@@ -19,8 +19,8 @@ const tokenStret = 'aoligei'
  * @apiVersion 1.0.0
  */
 router.get('/', async function (req, res, next) {
-    const data = await getArticle()
-    res.send({data})
+    const data = await getArticle(req.query)
+    res.send(data)
 });
 
 
@@ -39,7 +39,7 @@ router.get('/', async function (req, res, next) {
 router.get('/getArticle', async function (req, res, next) {
     const articleId = req.query.articleId
     const data = await getArticleDetail(articleId)
-    res.send(data[0])
+    res.send(data)
 });
 
 /**
@@ -49,6 +49,8 @@ router.get('/getArticle', async function (req, res, next) {
  * @apiGroup article
  * @apiParam {string} title 文章标题
  * @apiParam {string} article 文章内容
+ * @apiParam {string} introduction 简介
+ * @apiParam {string} picture 文章图片
  * @apiSuccess  message 返回message
  * @apiSuccess  status 返回状态
  * @apiHeader {String} Authorization 用户授权token
@@ -81,7 +83,7 @@ router.post('/sendArticle', async function (req, res, next) {
 })
 
 /**
- * @api {get} /my-blog/article/deleteArticle 提交文章
+ * @api {get} /my-blog/article/deleteArticle 删除文章
  * @apiDescription 删除文章
  * @apiName deleteArticle
  * @apiGroup article
@@ -93,10 +95,37 @@ router.post('/sendArticle', async function (req, res, next) {
  * @apiVersion 1.0.0
  */
 
- router.get('/deleteArticle', async function (req, res, next) {
+router.get('/deleteArticle', async function (req, res, next) {
     const id = req.query.articleId
     const data = await deleteArticle(id)
     res.send(data)    
+})
+
+/**
+ * @api {post} /my-blog/article/editArticle 编辑
+ * @apiDescription 编辑文章
+ * @apiName editArticle
+ * @apiGroup article
+ * @apiParam {string} title 文章标题
+ * @apiParam {string} article 文章内容
+ * @apiParam {string} introduction 简介
+ * @apiParam {string} picture 文章图片
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/article/deleteArticle
+ * @apiVersion 1.0.0
+ */
+router.post('/editArticle', async function (req, res, next) {
+    const data = req.body
+    const data1 = await editArticle({
+        id: data._id,
+        title: data.title,
+        article: data.article,
+        introduction: data.introduction,
+        picture: data.picture,
+    })
+    res.send(data1)    
 })
 
 module.exports = router;

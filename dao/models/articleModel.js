@@ -3,14 +3,14 @@ const { Schema, model } = require('mongoose')
 
 const articleSchema = new Schema({
     title: String,
-    article: Array,
+    article: String,
     picture: String,
     introduction: String,
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'usersModel'
     }
-})
+},{ timestamps:true })
 
 
 const articleBriefSchema = new Schema({
