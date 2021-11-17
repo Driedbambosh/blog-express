@@ -22,9 +22,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/blog',express.static(path.join(__dirname, 'web')));
-app.use('/manage',express.static(path.join(__dirname, 'manage')));
+var history = require('connect-history-api-fallback');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(history());
 app.use(express.static('uploads'))
 app.use(jwtAuth)
 app.use(function (err, req, res, next) {

@@ -175,7 +175,7 @@ router.get('/getUserInfo', async function (req, result, next) {
         login({
           userName: data.userName
         }).then(res => {
-          result.send(res)
+          result.send({...res,status:200})
         })
       }
   })
