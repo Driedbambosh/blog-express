@@ -19,8 +19,8 @@ module.exports.articleBrief = async function ({ pageSize, pageNo }) {
     }
 }
 // 删除
-module.exports.deleteArticle = async function () {
-    return await deleteArticleModel.deleteOne()
+module.exports.deleteArticle = async function (id) {
+    return await deleteArticleModel.findById(id).deleteOne()
 }
 
 

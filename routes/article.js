@@ -26,7 +26,7 @@ router.get('/', async function (req, res, next) {
 
 /* GET 文章详情. */
 /**
- * @api {get} /my-blog/article/ 获取文章详情
+ * @api {get} /my-blog/article/getArticle 获取文章详情
  * @apiDescription 获取文章详情
  * @apiName getArticle
  * @apiGroup article
