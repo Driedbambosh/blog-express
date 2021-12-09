@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken')
-const { sendArticle,getArticle,getArticleDetail,deleteArticle,editArticle } = require('../service/articleService');
+const { sendArticle,getArticle,getArticleId,getArticleDetail,deleteArticle,editArticle } = require('../service/articleService');
 const { login } = require('../service/usersService');
 
 
@@ -21,6 +21,28 @@ const tokenStret = 'aoligei'
 router.get('/', async function (req, res, next) {
     const data = await getArticle(req.query)
     res.send(data)
+});
+
+/* GET home page. */
+/**
+ * @api {get} /my-blog/article/ 获取用户文章列表
+ * @apiDescription 获取文章
+ * @apiName getArticle
+ * @apiGroup article
+ * @apiSuccess  data 返回文章数组
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/article/sendArticle
+ * @apiVersion 1.0.0
+ */
+ router.get('/forId', async function (req, res, next) {
+    const token = req.headers.authorization.split(' ')[1]
+    jwt.verify(token, tokenStret,(err, data) => {
+        getArticleId({page:req.query,user:data.id}).then(article => {
+            const data1 = article 
+            res.send(data1)
+         })
+    })
+    
 });
 
 

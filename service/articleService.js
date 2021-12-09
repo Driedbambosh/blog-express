@@ -1,4 +1,4 @@
-const { article,articleBrief,articleDetail,deleteArticle,editArticle } = require('../dao/articleDao')
+const { article,articleBrief,articleBriefId,articleDetail,deleteArticle,editArticle } = require('../dao/articleDao')
 module.exports.sendArticle = async function (user) {
     const data = await article(user)
     return data
@@ -16,6 +16,11 @@ module.exports.deleteArticle = async function (user) {
 
 module.exports.getArticle = async function (page) {
     const data = await articleBrief(page)
+    return data
+}
+// 查询文章列表（查询当前用户）
+module.exports.getArticleId = async function (pageUser) {
+    const data = await articleBriefId(pageUser)
     return data
 }
 

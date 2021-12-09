@@ -50,7 +50,7 @@ router.post('/login', async function (req, result, next) {
   if(isLogin) {
     // 生成token
     const token = jwt.sign(
-      { userName },
+      { userName,id:data[0]._id },
       tokenStret,
       { expiresIn: "24h"}
     ) 

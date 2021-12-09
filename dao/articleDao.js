@@ -12,7 +12,17 @@ module.exports.article = async function (article) {
 
 module.exports.articleBrief = async function ({ pageSize, pageNo }) {
     let count = await articleBriefModel.find().count()
-    let data = await articleBriefModel.find().skip((pageNo - 1) * pageSize).limit(pageSize - 0).populate('userId')
+    let data = await articleBriefModel.find().sort({'_id':-1}).skip((pageNo - 1) * pageSize).limit(pageSize - 0).populate('userId')
+    return {
+        data,
+        total: count
+    }
+}
+
+module.exports.articleBriefId = async function (page) {
+    console.log(page);
+    let count = await articleBriefModel.find({userId:page.user}).count()
+    let data = await articleBriefModel.find({userId:page.user}).skip((page.page.pageNo - 1) * page.page.pageSize).limit(page.page.pageSize - 0).populate('userId')
     return {
         data,
         total: count

@@ -51,18 +51,19 @@ router.post('/updateImage',upload.single('file'),async function(req, res, next) 
                 method: 'PUT',	// 请求方式
                 headers: {
                     'user-agent': 'node.js',
-                    'Content-Type': 'text/plain',
-                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                    // 'Accept': 'application/vnd.github.v3+json',
+                    'X-GitHub-Media-Type': 'github.v3',
                     // githubApi token
-                    'Authorization': 'token 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'
+                    'Authorization': 'token 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'
                 },
                 json: true,
                 body: {
                     'message': 'ImgUpload',
-                    'committer':{
-                        'name': "Driedbambosh",
-                        'email': "1145761792@qq.com"
-                    },
+                    // 'committer':{
+                    //     'name': "Driedbambosh",
+                    //     'email': "1145761792@qq.com"
+                    // },
                     'content': buffer.toString('base64')
                 },
             }
