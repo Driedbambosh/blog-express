@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken')
-const { sendArticle,getArticle,getArticleId,getArticleDetail,deleteArticle,editArticle } = require('../service/articleService');
+const { sendArticle,getArticle,getArticleId,getArticleDetail,deleteArticle,editArticle,getArticleComment } = require('../service/articleService');
 const { login } = require('../service/usersService');
 
 
@@ -148,6 +148,32 @@ router.post('/editArticle', async function (req, res, next) {
         picture: data.picture,
     })
     res.send(data1)    
+})
+
+/**
+ * @api {post} /my-blog/article/comment 发送评论
+ * @apiDescription 文章评论
+ * @apiName articleComment
+ * @apiGroup article
+ * @apiParam {string} articleId 文章id
+ * @apiParam {string} content 评论内容
+ * @apiParam {string} commentId 回复评论id
+ * @apiParam {string} commentUserId 回复用户id
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/article/deleteArticle
+ * @apiVersion 1.0.0
+ */
+ router.get('/comment', async function (req, res, next) {
+    const data = req.query
+    const data1 = await getArticleComment({
+        articleId: data.articleId,
+        content: data.content,
+        commentId: data.commentId,
+        commentUserId: data.commentUserId,
+    })
+    res.send(data1)
 })
 
 module.exports = router;

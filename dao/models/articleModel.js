@@ -27,6 +27,17 @@ const articleBriefSchema = new Schema({
     }
 })
 
+const articleCommentSchema = new Schema({
+    articleId: String,
+    comment: String,
+    commentId: String,
+    commentUserId: {
+        type: Schema.Types.ObjectId,
+        ref: 'usersModel'
+    }
+})
+
+
 // const userEdit = new Schema({
 
 // })
