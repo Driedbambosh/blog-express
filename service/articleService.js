@@ -31,6 +31,6 @@ module.exports.getArticleDetail = async function (articleId) {
 }
 // 获取文章详情
 module.exports.getArticleComment = async function (data) {
-    const data = await articleComment(data)
-    return data
+    const data1 = await articleComment(data)
+    return data1
 }
