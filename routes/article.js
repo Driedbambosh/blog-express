@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken')
-const { sendArticle,getArticle,getArticleId,getArticleDetail,deleteArticle,editArticle,getArticleComment } = require('../service/articleService');
+const { sendArticle, getArticle, getArticleId, getArticleDetail, deleteArticle, editArticle, sendArticleComment, getArticleComment } = require('../service/articleService');
 const { login } = require('../service/usersService');
 
 
@@ -34,15 +34,15 @@ router.get('/', async function (req, res, next) {
  * @apiSampleRequest http://localhost:8088/my-blog/article/sendArticle
  * @apiVersion 1.0.0
  */
- router.get('/forId', async function (req, res, next) {
+router.get('/forId', async function (req, res, next) {
     const token = req.headers.authorization.split(' ')[1]
-    jwt.verify(token, tokenStret,(err, data) => {
-        getArticleId({page:req.query,user:data.id}).then(article => {
-            const data1 = article 
+    jwt.verify(token, tokenStret, (err, data) => {
+        getArticleId({ page: req.query, user: data.id }).then(article => {
+            const data1 = article
             res.send(data1)
-         })
+        })
     })
-    
+
 });
 
 
@@ -61,6 +61,8 @@ router.get('/', async function (req, res, next) {
 router.get('/getArticle', async function (req, res, next) {
     const articleId = req.query.articleId
     const data = await getArticleDetail(articleId)
+
+    // sendResponse(res,200,'success,doc')
     res.send(data)
 });
 
@@ -83,17 +85,17 @@ router.post('/sendArticle', async function (req, res, next) {
     const article = req.body
     // 获取用户id
     const token = req.headers.authorization.split(' ')[1]
-    jwt.verify(token, tokenStret,(err, data) => {
-        if(err) {
+    jwt.verify(token, tokenStret, (err, data) => {
+        if (err) {
             result.send(err)
             return
-        }else {
+        } else {
             login({
-              userName: data.userName
+                userName: data.userName
             }).then(resArticle => {
                 let userId = resArticle[0]._id.toHexString()
                 // 发送service层数据
-                sendArticle({userId,article}).then(data => {
+                sendArticle({ userId, article }).then(data => {
                     res.send({
                         message: '提交成功',
                         status: 200
@@ -120,7 +122,7 @@ router.post('/sendArticle', async function (req, res, next) {
 router.get('/deleteArticle', async function (req, res, next) {
     const id = req.query.articleId
     const data = await deleteArticle(id)
-    res.send(data)    
+    res.send(data)
 })
 
 /**
@@ -147,7 +149,7 @@ router.post('/editArticle', async function (req, res, next) {
         introduction: data.introduction,
         picture: data.picture,
     })
-    res.send(data1)    
+    res.send(data1)
 })
 
 /**
@@ -157,6 +159,7 @@ router.post('/editArticle', async function (req, res, next) {
  * @apiGroup article
  * @apiParam {string} articleId 文章id
  * @apiParam {string} content 评论内容
+ * @apiParam {string} isFather 是否为父级
  * @apiParam {string} commentId 回复评论id
  * @apiParam {string} commentUserId 回复用户id
  * @apiSuccess  message 返回message
@@ -165,15 +168,54 @@ router.post('/editArticle', async function (req, res, next) {
  * @apiSampleRequest http://localhost:8088/my-blog/article/deleteArticle
  * @apiVersion 1.0.0
  */
- router.get('/comment', async function (req, res, next) {
-    const data = req.query
-    const data1 = await getArticleComment({
-        articleId: data.articleId,
-        content: data.content,
-        commentId: data.commentId,
-        commentUserId: data.commentUserId,
+router.post('/comment', async function (req, res, next) {
+    const data = req.body
+    const token = req.headers.authorization.split(' ')[1]
+
+    jwt.verify(token, tokenStret, (err, data1) => {
+        if (err) {
+            result.send(err)
+            return
+        }
+        else {
+            sendArticleComment({
+                articleId: data.articleId,
+                content: data.content,
+                isFather: data.isFather,
+                commentId: data.commentId,
+                commentUserId: data.commentUserId,
+                userId: data1.id,
+            }).then(item => {
+                res.send({
+                    message: '提交成功',
+                    status: 200
+                })
+            })
+        }
     })
-    res.send(data1)
+
 })
+
+/**
+ * @api {get} /my-blog/article/getArticleComment 获取文章评论列表
+ * @apiDescription 获取文章评论列表
+ * @apiName getArticleComment
+ * @apiGroup article
+ * @apiParam {string} id 文章id
+ * @apiSuccess  message 返回message
+ * @apiSuccess  status 返回状态
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/article/deleteArticle
+ * @apiVersion 1.0.0
+ */
+
+router.get('/getArticleComment', async function (req, res, next) {
+    const id = req.query.id
+    const isFather = req.query.isFather
+    const data = await getArticleComment(id, isFather)
+    res.send(data)
+})
+
+
 
 module.exports = router;

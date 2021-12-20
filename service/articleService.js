@@ -1,4 +1,4 @@
-const { article,articleBrief,articleBriefId,articleDetail,deleteArticle,editArticle,articleComment } = require('../dao/articleDao')
+const { article,articleBrief,articleBriefId,articleDetail,deleteArticle,editArticle,articleComment,getarticleComment } = require('../dao/articleDao')
 // 发送文章
 module.exports.sendArticle = async function (user) {
     const data = await article(user)
@@ -29,8 +29,13 @@ module.exports.getArticleDetail = async function (articleId) {
     const data = await articleDetail(articleId)
     return data
 }
-// 获取文章详情
-module.exports.getArticleComment = async function (data) {
+// 发送文章评论
+module.exports.sendArticleComment = async function (data) {
     const data1 = await articleComment(data)
     return data1
+}
+// 获取文章评论
+module.exports.getArticleComment = async function (id,isFather) {
+    const data = await getarticleComment(id,isFather)
+    return data
 }
