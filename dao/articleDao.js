@@ -72,7 +72,13 @@ module.exports.getarticleComment = async function (id,isFather) {
     }else {
         flag = false
     }
-    return await articleCommentModel.find({articleId: id,isFather:flag}).populate('commentUserId').populate('userId', { updated: 0, passWord: 0, autograph: 0, isLogin: 0, introduction: 0 })
+    // 查询父数据
+    let data =  await articleCommentModel.find({articleId: id,isFather:flag}).populate('commentUserId').populate('userId', { updated: 0, passWord: 0, autograph: 0, isLogin: 0, introduction: 0 })
+    await Promise.all(data.map(async (item) => {
+        // 等待异步操作完成，返回执行结果
+        item.replayData = await articleCommentModel.find({commentId:item._id}).populate('userId', { updated: 0, passWord: 0, autograph: 0, isLogin: 0, introduction: 0 }).populate('commentUserId', { updated: 0, passWord: 0, autograph: 0, isLogin: 0, introduction: 0 })
+    }));
+    return data
 }
 
 

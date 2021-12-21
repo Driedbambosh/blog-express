@@ -42,7 +42,8 @@ const articleCommentSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'usersModel'
-    }
+    },
+    replayData: Array,
 },{ timestamps:true })
 
 
