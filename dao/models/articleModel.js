@@ -6,6 +6,7 @@ const articleSchema = new Schema({
     article: String,
     picture: String,
     introduction: String,
+    label: Array,
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'usersModel'
@@ -17,6 +18,7 @@ const articleBriefSchema = new Schema({
     title: String,
     picture: String,
     introduction: String,
+    label: Array,
     article:{
         type: String,
         select: false

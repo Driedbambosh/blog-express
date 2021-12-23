@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken')
-const { sendArticle, getArticle, getArticleId, getArticleDetail, deleteArticle, editArticle, sendArticleComment, getArticleComment } = require('../service/articleService');
+const { sendArticle, getArticle, getArticleId,getArticleLabel, getArticleDetail, deleteArticle, editArticle, sendArticleComment, getArticleComment } = require('../service/articleService');
 const { login } = require('../service/usersService');
 
 
@@ -15,11 +15,28 @@ const tokenStret = 'aoligei'
  * @apiGroup article
  * @apiSuccess  data 返回文章数组
  * @apiHeader {String} Authorization 用户授权token
- * @apiSampleRequest http://localhost:8088/my-blog/article/sendArticle
+ * @apiSampleRequest http://localhost:8088/my-blog/article
  * @apiVersion 1.0.0
  */
 router.get('/', async function (req, res, next) {
     const data = await getArticle(req.query)
+    res.send(data)
+});
+
+/* GET home page. */
+/**
+ * @api {get} /my-blog/article/getArticleLabel 获取文章列表(标签)
+ * @apiDescription 获取文章(标签)
+ * @apiName getArticleLabel
+ * @apiGroup article
+ * @apiParam {string} labelId 标签id
+ * @apiSuccess  data 返回文章数组
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/article/getArticleLabel
+ * @apiVersion 1.0.0
+ */
+ router.get('/getArticleLabel', async function (req, res, next) {
+    const data = await getArticleLabel(req.query)
     res.send(data)
 });
 
@@ -65,6 +82,7 @@ router.get('/getArticle', async function (req, res, next) {
     // sendResponse(res,200,'success,doc')
     res.send(data)
 });
+
 
 /**
  * @api {post} /my-blog/article/sendArticle 提交文章
@@ -146,6 +164,7 @@ router.post('/editArticle', async function (req, res, next) {
         id: data._id,
         title: data.title,
         article: data.article,
+        label: data.label,
         introduction: data.introduction,
         picture: data.picture,
     })
