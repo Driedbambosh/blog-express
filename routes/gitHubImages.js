@@ -8,15 +8,15 @@ const fs = require("fs");
 const util = require("util");
 
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '.jpg') //Appending .jpg
-    }
-  })
-  
-  var upload = multer({ storage: storage });
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '.jpg') //Appending .jpg
+  }
+})
+
+var upload = multer({ storage: storage });
 
 router.post('/',function(req, res, next) {
     res.send({
