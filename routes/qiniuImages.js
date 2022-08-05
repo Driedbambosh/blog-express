@@ -7,8 +7,8 @@ var qiniu = require("qiniu");
 //要上传的空间名
 var bucket = 'driedbambosh'; 
 var imageUrl = 'rg2vn9rfj.hd-bkt.clouddn.com'; // 域名名称
-var accessKey = 'J7_vV1nZcM1W-IuRAEvljIp_9U38fHsUn_BFiGq7';
-var secretKey = 'nYOKgluha9m0CzwY4P5zQvMcDvmMog2UOTy9YXkx';
+var accessKey = 'K8Iv7xfzR6_uFnxOJm_iA8vA7YkQZg54MDZM93WY';
+var secretKey = 'BMoN2jI3FfIXnAUsDolPlD2PJYI9ezR9pDZX5-F4';
 var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
 var storage = multer.diskStorage({
@@ -30,7 +30,18 @@ var uploadToken = putPolicy.uploadToken(mac);
 
 var config = new qiniu.conf.Config();
 config.zone = qiniu.zone.Zone_z0;
-// 图片上传
+
+// 上传图片
+/**
+ * @api {post} /my-blog/qiniu/upload 上传图片
+ * @apiDescription 上传图片
+ * @apiName qiniuupload
+ * @apiGroup gitHubImages
+ * @apiParam {string} file 图片
+ * @apiHeader {String} Authorization 用户授权token
+ * @apiSampleRequest http://localhost:8088/my-blog/qiniu/upload
+ * @apiVersion 1.0.0
+ */
 router.post('/upload',upload.single('file'),async function(req, res, next){
     // 图片数据流
     var imgData = req.file;
