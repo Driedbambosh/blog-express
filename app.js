@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var articleRouter = require('./routes/article');
 var githubRouter = require('./routes/gitHubImages');
+var qiniuRouter = require('./routes/qiniuImages');
 var labelRouter = require('./routes/label');
 const jwtAuth = require('./utils/jwt')
 require('./dao/database');
@@ -41,6 +42,7 @@ app.use(function (err, req, res, next) {
 app.use('/my-blog', indexRouter);
 app.use('/my-blog/users', usersRouter);
 app.use('/my-blog/github', githubRouter);
+app.use('/my-blog/qiniu', qiniuRouter);
 app.use('/my-blog/article', articleRouter)
 app.use('/my-blog/label', labelRouter)
 
